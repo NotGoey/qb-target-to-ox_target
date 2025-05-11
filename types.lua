@@ -1,0 +1,24 @@
+---@class TargetOptions_options
+---@field icon string
+---@field label string
+---@field type? "client" | "server" | "command" | "qbcommand"
+---@field num? number
+---@field event? string
+---@field targeticon? string
+---@field action? fun(entity?: number | nil)
+---@field drawDistance? number
+---@field drawColor? number[]
+---@field successDrawColor? number[]
+---@field job? string | table<string, number>
+---@field excludejob? string | table<string, number>
+---@field jobType? string | table<string, boolean>
+---@field excludejobType? string | table<string, boolean>
+---@field gang? string | table<string, number>
+---@field excludegang? string | table<string, number>
+---@field item? table | string
+---@field citizenid? string
+---@field canInteract? fun(entity, distance, data): boolean
+
+---@class TargetOptions
+---@field options TargetOptions_options[]
+---@field distance? number
