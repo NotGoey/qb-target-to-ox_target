@@ -256,17 +256,6 @@ end
 
 exports('RemoveZone', RemoveZone)
 
-local function SetOptions(tbl, distance, options)
-	for _, v in pairs(options) do
-		if v.required_item then
-			v.item = v.required_item
-			v.required_item = nil
-		end
-		if not v.distance or v.distance > distance then v.distance = distance end
-		tbl[#tbl+1] = v
-	end
-end
-
 local function AddTargetBone(bones, parameters) error("Cannot translate Bones") end
 
 exports('AddTargetBone', AddTargetBone)
@@ -276,10 +265,8 @@ local function RemoveTargetBone(bones, labels) error("Cannot translate Bones") e
 exports('RemoveTargetBone', RemoveTargetBone)
 
 local function AddTargetEntity(entities, parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
-	local targetoptions = {}
-	SetOptions(targetoptions, distance, options)
-	exports.ox_target:addLocalEntity(entities, ConvertToOxTargetOptions(targetoptions))
+	parameters.distance = parameters.distance or Config.MaxDistance
+	exports.ox_target:addLocalEntity(entities, ConvertToOxTargetOptions(parameters))
 end
 
 exports('AddTargetEntity', AddTargetEntity)
@@ -291,10 +278,8 @@ end
 exports('RemoveTargetEntity', RemoveTargetEntity)
 
 local function AddTargetModel(models, parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
-	local targetoptions = {}
-	SetOptions(targetoptions, distance, options)
-	exports.ox_target:addModel(models, ConvertToOxTargetOptions(targetoptions))
+	parameters.distance = parameters.distance or Config.MaxDistance
+	exports.ox_target:addModel(models, ConvertToOxTargetOptions(parameters))
 end
 
 exports('AddTargetModel', AddTargetModel)
@@ -306,19 +291,17 @@ end
 exports('RemoveTargetModel', RemoveTargetModel)
 
 local function AddGlobalType(type, parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
-	local targetoptions = {}
-	SetOptions(targetoptions, distance, options)
+	parameters.distance = parameters.distance or Config.MaxDistance
 	if type == 1 then -- Ped
-		exports.ox_target:addGlobalPed(ConvertToOxTargetOptions(targetoptions))
+		exports.ox_target:addGlobalPed(ConvertToOxTargetOptions(parameters))
 		return
 	end
 	if type == 2 then -- Vehicle
-		exports.ox_target:addGlobalVehicle(ConvertToOxTargetOptions(targetoptions))
+		exports.ox_target:addGlobalVehicle(ConvertToOxTargetOptions(parameters))
 		return
 	end
 	if type == 3 then -- Object
-		exports.ox_target:addGlobalObject(ConvertToOxTargetOptions(targetoptions))
+		exports.ox_target:addGlobalObject(ConvertToOxTargetOptions(parameters))
 		return
 	end
 end
@@ -338,10 +321,8 @@ local function AddGlobalObject(parameters) AddGlobalType(3, parameters) end
 exports('AddGlobalObject', AddGlobalObject)
 
 local function AddGlobalPlayer(parameters)
-	local distance, options = parameters.distance or Config.MaxDistance, parameters.options
-	local targetoptions = {}
-	SetOptions(targetoptions, distance, options)
-	exports.ox_target:addGlobalPlayer(ConvertToOxTargetOptions(targetoptions))
+	parameters.distance = parameters.distance or Config.MaxDistance
+	exports.ox_target:addGlobalPlayer(ConvertToOxTargetOptions(parameters))
 end
 
 exports('AddGlobalPlayer', AddGlobalPlayer)
